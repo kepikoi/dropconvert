@@ -9,7 +9,13 @@
   "bin": {
     "dropconvert": "./bin/dropconvert"
   },
-  "keywords": ["video","MP4","convert","ffmpeg","downsample"],
+  "keywords": [
+    "video",
+    "MP4",
+    "convert",
+    "ffmpeg",
+    "downsample"
+  ],
   "author": "kepi@binks.rocks",
   "license": "ISC",
   "dependencies": {

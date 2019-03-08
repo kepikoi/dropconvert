@@ -10,7 +10,7 @@ const
 const
     videoPath = argv._[0]
     , name = videoPath.match(/([\w]+)\.[\w]{3,4}$/)[1]
-    , outPath = path.resolve(process.cwd(), `${name}.converted-1080p.MP4`)
+    , outPath = path.resolve(videoPath, "..", `${name}.converted-1080p.MP4`)
     , bar1 = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic)
 
 ;
@@ -30,6 +30,7 @@ const command = ffmpeg(fs.createReadStream(videoPath))
     .format("mov")
     .size('1920x?')
     .save(outPath)
+    // .outputOptions('-n')
     .on('codecData', data => {
         console.log(data);
         toalDuration = TimeFormat.toS(data.duration);
@@ -44,13 +45,15 @@ const command = ffmpeg(fs.createReadStream(videoPath))
     .on('error', err => {
         bar1.stop();
         console.error(err);
-        process.exit(1)
     })
     .on('end', () => {
         bar1.stop();
         console.log('Video file ' + videoPath + ' was transcoded to ' + outPath);
-        process.exit(0);
     })
 ;
 
+process.stdin.resume();
 
+process.on('exit', function (code) {
+    return console.log(`About to exit with code ${code}`);
+});
