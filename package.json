@@ -1,0 +1,21 @@
+{
+  "name": "dropconvert",
+  "version": "0.0.1",
+  "description": "drop 4K hight bit rate MP4 to downconvert to low bitrate 1080p MP4 ",
+  "main": "transcode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "dropconvert": "./bin/dropconvert"
+  },
+  "keywords": ["video","MP4","convert","ffmpeg","downsample"],
+  "author": "kepi@binks.rocks",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^2.1.1",
+    "easy-ffmpeg": "0.0.15",
+    "hh-mm-ss": "^1.2.0",
+    "minimist": "^1.2.0"
+  }
+}
