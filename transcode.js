@@ -9,10 +9,6 @@ const
 
 const
     videoPath = argv._[0]
-    , name = videoPath.match(/([\w]+)\.[\w]{3,4}$/)[1]
-    , outPath = path.resolve(videoPath, "..", `${name}.converted-1080p.MP4`)
-    , bar1 = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic)
-
 ;
 
 if (!videoPath) {
@@ -20,27 +16,30 @@ if (!videoPath) {
     process.exit(2);
 }
 
+const name = path.basename(videoPath,path.extname(videoPath))
+    , outPath = path.resolve(videoPath, "..", `${name}-converted-1080p.MP4`)
+    , bar1 = new _cliProgress.Bar({}, _cliProgress.Presets.shades_classic)
+
+;
+
 console.log("start transcoding ", videoPath, "to", outPath);
 let toalDuration = 0;
 
-const command = ffmpeg(fs.createReadStream(videoPath))
+ffmpeg(fs.createReadStream(videoPath))
     .audioCodec('ac3_fixed')
     .audioBitrate(128)
     .videoCodec('libx264')
     .format("mov")
     .size('1920x?')
-    .save(outPath)
-    // .outputOptions('-n')
+    .output(outPath, ["-n"])
     .on('codecData', data => {
-        console.log(data);
+        console.dir(data);
         toalDuration = TimeFormat.toS(data.duration);
         bar1.start(toalDuration, 0);
-
     })
     .on('progress', progress => {
         const p = TimeFormat.toS(progress.timemark);
         bar1.update(p);
-
     })
     .on('error', err => {
         bar1.stop();
@@ -50,10 +49,7 @@ const command = ffmpeg(fs.createReadStream(videoPath))
         bar1.stop();
         console.log('Video file ' + videoPath + ' was transcoded to ' + outPath);
     })
+    .run()
 ;
 
 process.stdin.resume();
-
-process.on('exit', function (code) {
-    return console.log(`About to exit with code ${code}`);
-});
