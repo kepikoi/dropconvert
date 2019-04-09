@@ -1,7 +1,7 @@
 {
   "name": "dropconvert",
   "version": "0.0.1",
-  "description": "drop 4K hight bit rate MP4 to downconvert to low bitrate 1080p MP4 ",
+  "description": "Drag, drop & transcode 4K footage to 1080p",
   "main": "transcode.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

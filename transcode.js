@@ -23,7 +23,7 @@ const name = path.basename(videoPath,path.extname(videoPath))
 ;
 
 console.log("start transcoding ", videoPath, "to", outPath);
-let toalDuration = 0;
+let totalDuration = 0;
 
 ffmpeg(fs.createReadStream(videoPath))
     .audioCodec('ac3_fixed')
@@ -34,8 +34,8 @@ ffmpeg(fs.createReadStream(videoPath))
     .output(outPath, ["-n"])
     .on('codecData', data => {
         console.dir(data);
-        toalDuration = TimeFormat.toS(data.duration);
-        bar1.start(toalDuration, 0);
+        totalDuration = TimeFormat.toS(data.duration);
+        bar1.start(totalDuration, 0);
     })
     .on('progress', progress => {
         const p = TimeFormat.toS(progress.timemark);
