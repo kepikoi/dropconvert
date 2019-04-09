@@ -1,6 +1,6 @@
 {
   "name": "dropconvert",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Drag, drop & transcode 4K footage to 1080p",
   "main": "transcode.js",
   "scripts": {
